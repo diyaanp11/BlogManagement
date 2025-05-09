@@ -1,18 +1,25 @@
 import axios from 'axios';
 import { ErrorMessage, Field, Form, Formik } from 'formik'
-import React from 'react'
+import React, { useContext } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import * as Yup from "yup";
+import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
+
+    const {login} = useContext(AuthContext)
+
     const postFormData = async(values)=>{
     try{
-        await axios.post("https://blog-hqx2.onrender.com/user/login", values)
+      const response =  await axios.post("https://blog-hqx2.onrender.com/user/login", values)
    toast.success("Login Successfully")
+   const token = response.data.token
+   const user = response.data.user
+   login(token, user)
         }
         
         catch (error){
-            toast.error("Login Unsuccessfully")
+            toast.error("Login Unsuccessful")
             console.log(error);
         }
     }
