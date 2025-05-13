@@ -2,11 +2,15 @@ import { Field, Form, Formik } from "formik"
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 
-const CreateBlog = () => {
+const EditBlogs = () => {
     const [image,setImage] = useState(null);
+    const location = useLocation();
+    const {id} = useParams();
+
+    console.log(location)
         const navigate = useNavigate();
 
       const {user} = useContext(AuthContext);
@@ -19,6 +23,8 @@ const CreateBlog = () => {
     }
 
     const handleSubmit = async(values)=>{
+
+      console.log(values);
         console.log(values,image,user);
         const formData = new FormData();
            formData.append("title",values?.title)
@@ -28,7 +34,7 @@ const CreateBlog = () => {
            formData.append("author",user?._id);
 
           try {
-               await axios.post("https://blog-hqx2.onrender.com/blog/create",formData)
+               await axios.put(`https://blog-hqx2.onrender.com/blog/${id}`,formData)
                 navigate("/");
           } catch (error) {
             console.log(error)
@@ -39,14 +45,15 @@ const CreateBlog = () => {
     <div className="mt-10 ml-10">
         <Formik
           initialValues={{
-             title:"",
-             content:"",
+             title:location.state.blog.title,
+
+             content:location.state.blog.content
           }}
           onSubmit={(values)=>{
             handleSubmit(values);
           }}
         >
-            <Form encType="multipart/form-data" className="flex flex-col gap-4 w-3/4">
+            <Form>
                 <label htmlFor="title" className="text-xl mr-4">Title</label>
                 <Field type="text" name="title" placeholder="enter blog title" className="border" />
                 <label htmlFor="title" className="text-xl mr-4">Content</label>
@@ -69,4 +76,4 @@ const CreateBlog = () => {
   )
 }
 
-export default CreateBlog
+export default EditBlogs

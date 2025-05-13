@@ -4,18 +4,20 @@ import React, { useContext } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import * as Yup from "yup";
 import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
     const {login} = useContext(AuthContext)
-
-    const postFormData = async(values)=>{
+    const navigate = useNavigate()
+    const loginUser = async(values)=>{
     try{
       const response =  await axios.post("https://blog-hqx2.onrender.com/user/login", values)
    toast.success("Login Successfully")
    const token = response.data.token
    const user = response.data.user
    login(token, user)
+   navigate("/blog")
         }
         
         catch (error){
@@ -34,7 +36,7 @@ const Login = () => {
             })
         }
         onSubmit={(values) =>{
-           postFormData(values)
+           loginUser(values)
         }}
         >
     <Form className='flex flex-col gap-y-5 w-96 mt-25 mx-auto border-black p-6 rounded shadow-md '>
