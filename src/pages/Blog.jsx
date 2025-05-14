@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { PlusCircleIcon } from "@heroicons/react/24/solid";
 
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
@@ -18,29 +17,38 @@ const Blog = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-2">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
           Discover Blog Posts
         </h1>
 
+        <Link to={"/myblog"}>
+          {" "}
+          <div className="p-2 bg-blue-500 text-white rounded-lg">Myblog</div>
+        </Link>
+
         {/* Link to create a new blog */}
-        <Link to={"/myblog"}>  <div className="p-2 bg-blue-500 text-white rounded-lg">
-        My Blog
-       </div>
-       </Link>
-     <Link to={"/create-blog"}>  <div className="p-2 bg-blue-500 text-white rounded-lg">
-        Create Blog
-       </div>
-       </Link>
+        <Link to={"/create-blog"}>
+          {" "}
+          <div className="p-2 bg-blue-500 text-white rounded-lg">
+            Create Blog
+          </div>
+        </Link>
+
+        <Link to={"/userprofile"}>
+          {" "}
+          <div className="p-2 bg-blue-500 text-white rounded-lg">Profile</div>
+        </Link>
       </div>
 
       {/* Display blogs */}
       {blogs.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {blogs.map((blog) => (
-            <Link to={`/singleblogs/${blog._id}`}
+            <Link
+              to={`/singleblogs/${blog._id}`}
               key={blog._id}
-              // onClick={() => navigate(`/singleAllBlogPage/${blog._id}`)}
+              // onClick={() => navigate(/singleAllBlogPage/${blog._id})}
               className="bg-white cursor-pointer rounded-xl shadow-lg overflow-hidden transition-all duration-300 ease-in-out hover:shadow-2xl transform hover:-translate-y-1 flex flex-col"
             >
               {blog.image ? (

@@ -8,9 +8,7 @@ const ProtectedRoute = ({children}) => {
     if(!token){
         return <Navigate to={"/login"}/>
     }
-  return (
-    <div>ProtectedRoute</div>
-  )
+  return children
 }
 
 export default ProtectedRoute
